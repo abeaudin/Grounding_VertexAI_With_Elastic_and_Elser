@@ -52,31 +52,28 @@ And the model will show as deploying
 This will take a few minutes and in the meantime we can index the sample data.
 
 ## Download and index data in Elasticsearch
-This guide uses an abbreviated (1000 lines) msmarco-passagetest2019-top1000 data set called [msmarco-passagetest-2019-top-1000-unique-short.tsv](https://elastic.co), The original top 1000 version of this file is referenced [here](https://www.elastic.co/docs/solutions/search/semantic-search/semantic-search-elser-ingest-pipelines#load-data) in the Elastic Docs. 
+This guide uses an abbreviated (1000 lines) msmarco-passagetest2019-top1000 data set called [msmarco-passagetest-2019-top-1000-unique-short.tsv](https://github.com/abeaudin/Grounding_VertexAI_With_Elastic_and_Elser/blob/main/msmarco-passagetest2019-unique-short.tsv), The original top 1000 version of this file is referenced [here](https://www.elastic.co/docs/solutions/search/semantic-search/semantic-search-elser-ingest-pipelines#load-data) in the Elastic Docs. 
 
 
 From the menu on the left side, select Getting Started
+<img width="758" alt="Screenshot 2025-06-17 at 10 22 20 AM" src="https://github.com/user-attachments/assets/994d05ff-36ab-4de8-af3e-eb8cebf77d5a" />
 
 
-Then select Upload a file
-
-
-Select or drag and drop the tsv file 
-
-
-
-In the subsequent page, click override settings
-
+Then select Upload a file and in the following screen, select or drag and drop the tsv file 
+<img width="1011" alt="Screenshot 2025-06-17 at 10 24 25 AM" src="https://github.com/user-attachments/assets/a53f170d-f8cd-4013-8bb9-0c411e51d55c" />
 
 Click import and in the subsequent screen, add the index-name, leave Create data view checked and click import
+<img width="846" alt="Screenshot 2025-06-17 at 10 47 52 AM" src="https://github.com/user-attachments/assets/a5e6f537-b08d-4c52-9c48-39d9f6f445bc" />
 
 
 The importer will have imported the data and now we can switch to the dev console for the next steps.
+<img width="1069" alt="Screenshot 2025-06-17 at 10 49 08 AM" src="https://github.com/user-attachments/assets/80c89768-11f1-4eb4-a3b2-9b10bf0300a1" />
 
-Create pipeline and reindex data
+## Create pipeline and reindex data
 
-## ELSER Setup and Embedding Creation
+### ELSER Setup and Embedding Creation
 Create embedding index
+```
 PUT my-index
 {
  "mappings": {
@@ -90,7 +87,9 @@ PUT my-index
    }
  }
 }
+```
 Create Ingest Pipeline
+```
 PUT _ingest/pipeline/elser-v2-test
 {
  "processors": [
@@ -107,7 +106,9 @@ PUT _ingest/pipeline/elser-v2-test
    }
  ]
 }
+```
 Reindex the data
+```
 POST _reindex
 {
  "source": {
@@ -119,9 +120,10 @@ POST _reindex
    "pipeline": "elser-v2-test"
  }
 }
-
+```
 
 Test query
+```
 GET my-index/_search
 {
  "_source": ["content"],
@@ -129,14 +131,15 @@ GET my-index/_search
      "sparse_vector":{
         "field": "content_embedding",
         "inference_id": ".elser_model_2_linux-x86_64",
-        "query": "What is an FBO"
+        "query": "What is Pontiac"
      }
   }
 }
+```
 
-
-Create Search Template and Test
+## Create Search Template and Test
 Create the search template
+```
 PUT _scripts/google-template-elser
 {
  "script": {
@@ -154,22 +157,23 @@ PUT _scripts/google-template-elser
    }
  }
 } 
-
+```
 
 Test the search template
+```
 GET my-index/_search/template
 {
  "id": "google-template-elser",
  "params": {
-   "query": "What is an FBO",
+   "query": "What is Pontiac",
    "num_hits": 5
  }
 }
-
+```
 
 Now that this is all tested, let’s gather up the elasticsearch endpoint and create an API key so that we can configure the grounding service in the Google Cloud Console.
 
-Gather configuration information
+## Gather configuration information
 
 Return to the Getting Started section of Kibana by clicking on Getting Started on the lower left, scroll down and there are two sections we need to work with
 API Key
