@@ -1,52 +1,58 @@
-How To: Configure Elastic Grounding in GCP Vertex and Elastic Serverless 
+# How To: Configure Elastic Grounding in GCP Vertex and Elastic Serverless 
 
-Overview
+## Overview
+  
+- Set up Elasticsearch Project
+- Deploy ELSER
+- Download and index data in Elasticsearch
+- Create and test ELSER/search template
+- Gather configuration information
+- Configure Vertex
+- Configure grounding - endpoint, api, index name and search template
+- System commands
+- Prompt with and without grounding
 
-Set up an Elasticsearch Project in Elastic Cloud - make it search
-Deploy ELSER
-Download and index data in Elasticsearch
-Create and test ELSER/search template
-Gather configuration information
-Configure Vertex
-Configure grounding - endpoint, api, index name and search template
-System commands
-Prompt with and without grounding
 
+## Set up Elasticsearch Project
 
-Set up Elasticsearch Project
+Navigate to cloud.elastic.co and login
+<img width="974" alt="Screenshot 2025-06-17 at 9 58 38 AM" src="https://github.com/user-attachments/assets/e8ca7cd7-2fd2-484b-8b15-a17befe1dec3" />
 
-Navigate to cloud.elastic.co
-Login
 Create a new Elastic Project by clicking Create serverless project
 
 
 In the next screen, select Elasticsearch by clicking Next
+<img width="1078" alt="Screenshot 2025-06-17 at 9 58 46 AM" src="https://github.com/user-attachments/assets/e96e0d82-f787-496f-9fb5-0bfb7e0329eb" />
 
 
 Configure the project name and hyperscaler in this screen and click Create serverless project to continue
+<img width="1099" alt="Screenshot 2025-06-17 at 9 58 57 AM" src="https://github.com/user-attachments/assets/293a75e9-875e-4e7d-a0dd-2eb9913bcf4d" />
 
 
 The project will take a few minutes to deploy
+<img width="1107" alt="Screenshot 2025-06-17 at 9 59 10 AM" src="https://github.com/user-attachments/assets/70f5f1b1-6e5d-4c61-9bdf-1512c5cfcd08" />
 
-Deploy Elser
+## Deploy ELSER
+
 Once the project has been deployed,  an update to the creating project page will occur. Click continue. This will bring you to Kibana with an add data page. In the lower left corner, expand project settings and select Trained Models.
+<img width="1030" alt="Screenshot 2025-06-17 at 10 12 24 AM" src="https://github.com/user-attachments/assets/8925236c-8122-4c4e-97c9-63d5918f3eb2" />
 
 
 Click Start Deployment on .elser_model_2_linux-x86_64
+<img width="1075" alt="Screenshot 2025-06-17 at 10 14 38 AM" src="https://github.com/user-attachments/assets/e32672df-c47a-4a88-b7f2-4151f3d92733" />
 
-
-
-
-Select the defaults by clicking start
+Select the defaults by clicking start<br>
+<img width="514" alt="Screenshot 2025-06-17 at 10 16 15 AM" src="https://github.com/user-attachments/assets/093e0698-d3e7-4c1d-a726-39ec5f7be20e" />
 
 
 And the model will show as deploying
+<img width="860" alt="Screenshot 2025-06-17 at 10 16 39 AM" src="https://github.com/user-attachments/assets/c4a7a2f6-24fc-4ab9-b0a3-2d54909383e0" />
 
 
 This will take a few minutes and in the meantime we can index the sample data.
 
-Download and index data in Elasticsearch
-Download the abbreviated msmarco dataset (1000 lines instead of 182K)
+## Download and index data in Elasticsearch
+This guide uses an abbreviated (1000 lines) msmarco-passagetest2019-top1000 data set called [msmarco-passagetest-2019-top-1000-unique-short.tsv](https://elastic.co), The original top 1000 version of this file is referenced [here](https://www.elastic.co/docs/solutions/search/semantic-search/semantic-search-elser-ingest-pipelines#load-data) in the Elastic Docs. 
 
 
 From the menu on the left side, select Getting Started
@@ -69,7 +75,7 @@ The importer will have imported the data and now we can switch to the dev consol
 
 Create pipeline and reindex data
 
-ELSER Setup and Embedding Creation
+## ELSER Setup and Embedding Creation
 Create embedding index
 PUT my-index
 {
