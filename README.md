@@ -178,12 +178,15 @@ Now that this is all tested, let’s gather up the elasticsearch endpoint and cr
 Return to the Getting Started section of Kibana by clicking on Getting Started on the lower left, scroll down and there are two sections we need to work with
 API Key
 Copy your connection details
+<img width="1116" alt="Screenshot 2025-06-17 at 11 55 31 AM" src="https://github.com/user-attachments/assets/152cd12c-001f-4698-994e-0a5f0c98d676" />
+
 
 
 
 Copy your connection details is straight forward, copy it as an Elasticsearch endpoint.
 
 For the API Key, click New and in the flyover:
+<img width="717" alt="Screenshot 2025-06-17 at 11 56 14 AM" src="https://github.com/user-attachments/assets/a6832d2e-fda0-4d6a-a62a-b06c4696aefd" />
 
 
 Enter a Name
@@ -191,37 +194,47 @@ Set expiration/metadata/security privileges as needed. I left them as default.
 
 Click Create API key at the lower right of the flyover
 
-The flyover will disappear and a ‘Store this API Key’ section in green will appear.Copy the key. (ApiKey SlUwOWY1Y0JnVW50STNoZGN2d2M6Sk9wMWVyU2QzRGxYZkRtZk9YQ1ZuUQ==)
+The flyover will disappear and a ‘Store this API Key’ section in green will appear.Copy the key.
+<img width="1123" alt="Screenshot 2025-06-17 at 11 54 46 AM" src="https://github.com/user-attachments/assets/ac8dcbde-f760-4bef-8223-43e41e7822d2" />
 
 
 Google Configuration
 In the GCP Console, using the menu in the upper left, navigate to Vertex AI -> Dashboard
+<img width="474" alt="Screenshot 2025-06-17 at 12 06 51 PM" src="https://github.com/user-attachments/assets/be5d1faa-1875-4049-bb8d-f6150ef4fc52" />
 
 
 In the dashboard, select Vertex AI Studio
+<img width="718" alt="Screenshot 2025-06-17 at 12 08 12 PM" src="https://github.com/user-attachments/assets/e4d08422-6c83-4dcd-9355-fae3dda5dcf8" />
 
 Then select Create Prompt on the left, I right click it and select open link in new tab twice. One tab for grounding and one tab for not.
 
+<img width="916" alt="Screenshot 2025-06-17 at 12 08 20 PM" src="https://github.com/user-attachments/assets/871a84c1-d406-4b84-84a4-e56d10599bbb" />
 
-In the grounding tab, configure grounding with Elasticsearch and select Elasticsearch. This will bring up a flyover where you add in
+In the grounding tab, configure grounding Your Data  and select Elasticsearch. This will bring up a flyover where you add in
+
+<img width="452" alt="Screenshot 2025-06-17 at 4 28 41 PM" src="https://github.com/user-attachments/assets/f397d8b1-ca0b-47c0-9285-00cccda8e4b8" />
 
 Elasticsearch host
+```
 Api Key (prepend ApiKey in front of the key as follows ApiKey sadlk9w-2wjalksjd)
 Index name: my-index
 Search Template: google-template-elser
-
+```
 And click save
-
-
+<br>
 
 In the system prompt for grounded, enter something like this
+```
 “you are a helpful assistant who is grounded with data from Elasticsearch. If Elasticsearch doesn't know about it, neither do you. Just reply that you don't have enough information”
-
+```
 Then in both tabs (grounded and non grounded) ask
-
+```
 What is Pontiac
+```
+and
+```
 What is Buick
-
-For questions a), b), in non grounded, the LLM will answer and with a) in grounded, it will list it’s sources from Elastic and for b) it will answer that it doesn’t know.
+```
+For questions above, in non grounded, the LLM will answer and with Pontiac in grounded, it will list it’s sources from Elastic and for Buick it will answer that it doesn’t know.
 
 
