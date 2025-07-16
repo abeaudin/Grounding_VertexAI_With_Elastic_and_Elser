@@ -1,4 +1,4 @@
-# How To: Configure Elastic Grounding in GCP Vertex and Elastic Serverless 
+# How To: Configure Elastic Grounding in GCP Vertex and Elastic Serverless and fscrawler
 
 ## Overview
   
